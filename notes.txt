@@ -1,0 +1,34 @@
+Task 1: - Implement SSH version2 for secured switch connections
+config t
+ip domain-name keymo
+
+
+
+
+=======================
+elasticsearch.v1
+root
+C1sc0123
+
+http://208.8.8.133/otrs/index.pl
+root@localhost
+C1sc0123
+
+http://208.8.8.133/otrs/customer.pl
+user1
+C1sc0123
+
+
+========================
+WIndows server
+
+run -> ncpa.cpl
+right click ethernet0 -> properties
+configure ipv4 address (no gateway)
+dns (127.0.0.1)
+
+turn off firewall --> powershell ISE
+view -> show script pane
+type -> get-netfirewallprofile
+type -> set-netfirewallprofile -name domain,private,public -enable false
+
