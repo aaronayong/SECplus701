@@ -1,0 +1,203 @@
+Day 2 - Nov 29
+
+to access using secure crt
+- click kidlat
+- protocol --> serial
+- port --> com3 usb-serial ch340
+- uncheck --> XON/OFF
+- click connect
+
+========================================================
+to access vmware windows server 2022 - ctrl+alt+insert
+
+=======================================================
+To create new DNS ZONE
+go to powershell ISE
+go to createDNSZONES.ps1
+edit existing syntax (For example bpi.ph.com to gcash.ph.com -- control H then replace all)
+once done click run
+
+=============================================================
+To verify Newly created DNS Zone
+go to server manager
+click --> tools
+click --> DNS
+click --> NAS
+click --> forward lookup zones
+*newly created DNS zone should be visible under forward lookup zones
+
+==============================================================
+create new Host (A or AAAA) for gcash.ph.com (without www)
+leave Name blank
+add ip add 10.31.1.8
+
+===========================================================
+create Mail exchange
+right click on gcash.ph.com
+click new Mail Exchanger (MX)
+leave blank on Host or child domain
+FQDN -> gcash.ph.com
+click ok
+*for connectivity ping the ip 10.31.1.8 (this ip is in rivan room only)
+
+================================================================
+Create gcash website
+go to powershell -->  create website tab
+replace path with new url from gcash
+("C:\DNS-CONFIG-main\DNS-CONFIG-main\bank-phishing-sites\gcash"
+click run (make sure no error)
+
+================================================================
+to create mail server
+click hMailServer Administrator
+default password C1sc0123
+check first if autoban is disabled
+
+=================================================================
+to create domain
+click domains
+- click add (gcash.ph.com)
+
+====================================================================
+to create email accounts
+click domain
+click account
+click add (*@gcash.ph.com)
+
+=================================================================
+to setup email account in thunderbird
+click new acount --> email
+input full name and email address (based from account created in hMail)
+click manual configuration
+*for incoming server select IMAP
+hostname imap.gcash.ph.com
+make sure port is 143 for IMAP
+click next
+*for outgoing server select IMAP
+hostname imap.gcash.ph.com
+click test (font should be color green for successful testing)
+click continue
+
+===========================================
+===========================================
+
+SIEM - Security Information Event Management
+
+How to install ElasticSearch on VMware
+double click ElasticSearch.V1.vmx
+click "i copied it"
+copy "download and install filebeat" to
+
+how to install csr1000v-universalk9.17.03.01a (VOIP Features)
+click csr1000v-universalk9.17.03.01a
+name csr1000v1
+deployment options --> small
+1. bootstrap properties
+csr1000
+admin
+pass
+pass
+gigaethernet1
+
+go to vmware to check network settings
+click network adapter 1 change to NAT
+csr1 configs:
+enable
+conf t
+int g1
+ip add dhcp
+no shut
+
+=========================================
+
+note: to execute command type "sudo nano"
+
+======================================
+connection csr to elastic:
+conf t
+logging on host 208.8.8.133 transport udp port 9001
+logging trap informational
+
+===============================
+kibana ui is used in security
+
+===============================
+to record logs in elastic
+archive
+log config
+logging enable
+notify syslog
+
+==============================
+
+to determine who logged in 
+login on-failure log
+login on-success log
+============================
+
+to block icmp packets
+create ACL
+access-list 100 deny ip any host 208.8.8.104 log
+access-list permit any any
+go to int
+int g1
+ip access-group 100 in
+
+==============================
+
+WAZUH(rocky linux) is for endpoint security
+wazuh credentials:
+admin
+C1sc0123..
+
+for linux login:
+root
+C1sc0123
+
+to enable web browsing of gui
+sudo systemctl stop firewalld
+
+---------------
+how to deploy new agent
+select window
+input server ip 
+create agent name
+select default
+copy command to windows powershell (dos)
+copy command start agent 
+
+How to debug if normal adding of agent did not work
+go to drive c--> program file (x86) --> ossec-agent --> click win32ui.exe --> click view --> click config
+--> copy config to notepad++
+edit server IP
+saved and copy paste to ossec notepad. Click manage --> click stop --> click start ---> then refresh wazuh in browser to verify if agent is added
+
+---------------------
+For File Integrity monitoring
+sample only: create a folder in desktop --> add any text file as sample
+Go to win32ui.exe --> view config --> copy and paste config to notepad++ 
+go to line 91 and add this directory:
+<directories realtime="yes" report_changes="yes" check_all="yes">C:\Users\Administrator\Desktop\Rivan31</directories> 
+copy paste config to ossec notepad then save
+Go to file integrity monitoring --> click inventory --> click 
+-------------------------------
+
+<directories realtime="yes" report_changes="yes" check_all="yes"><directories>
+
+
+
+
+
+===================================
+===================================
+LOGIN CREDENTIALS!!!
+
+ELASTICSEARCH
+root
+C1sc0123
+
+----------
+csr1000v1
+admin
+pass
+
